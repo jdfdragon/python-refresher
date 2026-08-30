@@ -4,14 +4,22 @@ def get_column(file_name, query_column, query_value, result_column):
 
     file = open(file_name, mode='r', encoding='utf-8', newline='')
 
+    reader = csv.DictReader(file)
+
     if type(query_column) == str:
-        reader = csv.DictReader(file)
         if query_column not in reader.fieldnames:
             print(f"Error: Query ('{query_column}') not found. Defaulting to {reader.fieldnames[0]}.")
+    else:
+        query_column = reader.fieldnames[query_column]
+        
+
+
+    if type(result_column) == str:
         if result_column not in reader.fieldnames:
             print(f"Error: Result ('{result_column}') not found. Defaulting to {reader.fieldnames[1]}.")
     else:
-        reader = csv.reader(file)
+        result_column = reader.fieldnames[result_column]
+
 
     results = []
 
