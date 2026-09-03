@@ -1,6 +1,6 @@
 import csv
 
-def get_column(file_name, query_column, query_value, result_column):
+def get_column(file_name, query_column, query_value, result_column=1):
 
     file = open(file_name, mode='r', encoding='utf-8', newline='')
 
