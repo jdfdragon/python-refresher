@@ -1,1 +1,1 @@
-python3 print_fires.py
+python3 print_fires.py "$@"
