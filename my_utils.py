@@ -14,31 +14,22 @@ def get_column(file_name, query_column, query_value, result_column=1):
             print(f"Error: File '{file_name}' not found.")
             return []
 
-        reader = csv.DictReader(file)
-        fieldnames = reader.fieldnames
+        reader = csv.reader(file)
 
-        # Since argparse passes strings, we need to interpret as integers
-        # Or we can test them and then shove them through
+        try:
+            query_column = int(query_column)
+        except (ValueError, TypeError):
+            print(f"Error: Query ('{query_column}') not found.")
+            sys.exit(1)
+            return 
 
-        if query_column not in fieldnames:
-            try:
-                query_column = int(query_column)
-            except (ValueError, TypeError):
-                print(f"Error: Query ('{query_column}') not found.")
-                sys.exit(1)
-                return 
-
-        if result_column not in fieldnames:
-            try:
-                result_column = int(result_column)
-            except (ValueError, TypeError):
-                print(f"Error: Result ('{result_column}') not found.")
-                sys.exit(1)
-                return
-
-        if not isinstance(query_column, int) and not isinstance(result_column, int):
-            reader = csv.Reader(file)
-
+        try:
+            result_column = int(result_column)
+        except (ValueError, TypeError):
+            print(f"Error: Result ('{result_column}') not found.")
+            sys.exit(1)
+            return
+        
         results = []
 
         for row in reader:
@@ -49,7 +40,5 @@ def get_column(file_name, query_column, query_value, result_column=1):
                 decimal = float(val)
                 integer = int(decimal)
                 results.append(integer)
-
-    print(f"Column '{result_column}' by '{query_column}:")
     
     return results
