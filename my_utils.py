@@ -5,12 +5,20 @@ import sys
 
 def get_column(file_name, query_column, query_value, result_column=1):
 
+    """
+    Read a csv file and returns a list of values from a specified column [result_column],
+    based on a value [query_value] in a different column [query_column].
+    """
+
     file_path = Path(file_name)
 
     if not file_path.is_file():
         print(f"Error: File '{file_name}' not found in current directory.")
         sys.exit(1)
-        return
+
+    if file_path.suffix.lower() != ".csv":
+        print(f"Expected a .csv file, got {file_path.suffix}")
+        sys.exit(1)
 
     with open(file_name, mode='r', encoding='utf-8', newline='') as file:
 
@@ -24,26 +32,22 @@ def get_column(file_name, query_column, query_value, result_column=1):
         try:
             query_column = int(query_column)
         except (ValueError, TypeError):
-            print(f"Error: Query ('{query_column}') not found.")
+            print(f"Error: Query column ('{query_column}') is not an integer.")
             sys.exit(1)
-            return
 
         if query_column >= num_columns:
             print(f"Error: Query column ('{query_column}') out of bounds.")
             sys.exit(1)
-            return
 
         try:
             result_column = int(result_column)
         except (ValueError, TypeError):
-            print(f"Error: Result ('{result_column}') not found.")
+            print(f"Error: Result column ('{result_column}') is not an integer.")
             sys.exit(1)
-            return
 
         if result_column >= num_columns:
             print(f"Error: Result column ('{result_column}') out of bounds.")
             sys.exit(1)
-            return
 
         results = []
 
@@ -55,5 +59,8 @@ def get_column(file_name, query_column, query_value, result_column=1):
                 decimal = float(val)
                 integer = int(decimal)
                 results.append(integer)
+
+        if len(results) == 0:
+            print("No results found.")
 
     return results
