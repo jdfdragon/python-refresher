@@ -16,6 +16,11 @@ def get_column(file_name, query_column, query_value, result_column=1):
 
         reader = csv.reader(file)
 
+        first_row = next(reader)
+        num_columns = len(first_row)
+    
+        reader = csv.reader(file)
+
         try:
             query_column = int(query_column)
         except (ValueError, TypeError):
@@ -23,10 +28,20 @@ def get_column(file_name, query_column, query_value, result_column=1):
             sys.exit(1)
             return
 
+        if query_column >= num_columns:
+            print(f"Error: Query column ('{query_column}') out of bounds.")
+            sys.exit(1)
+            return
+
         try:
             result_column = int(result_column)
         except (ValueError, TypeError):
             print(f"Error: Result ('{result_column}') not found.")
+            sys.exit(1)
+            return
+
+        if result_column >= num_columns:
+            print(f"Error: Result column ('{result_column}') out of bounds.")
             sys.exit(1)
             return
 
