@@ -1,12 +1,13 @@
-from ast import In
 from pathlib import Path
 import csv
+import sys
 
 
 def get_column(file_name, query_column, query_value, result_column=1):
 
     with open(file_name, mode='r', encoding='utf-8', newline='') as file:
 
+        # test file path
         file_path = Path(file_name)
 
         if not file_path.is_file():
@@ -16,34 +17,27 @@ def get_column(file_name, query_column, query_value, result_column=1):
         reader = csv.DictReader(file)
         fieldnames = reader.fieldnames
 
-        if not fieldnames:
-            print("Error: File is empty or does not contain a header row.")
+        # Since argparse passes strings, we need to interpret as integers
+        # Or we can test them and then shove them through
 
-        try:
-            query_column = int(query_column)
-            query_column = fieldnames[query_column]
-        except (ValueError, TypeError):
-            if query_column not in fieldnames:
-                print(f"Error: Query ('{query_column}') not found."
-                      f" Defaulting to {fieldnames[0]}.")
-                query_column = fieldnames[0]
-        except IndexError:
-            print(f"Error: Query index ({query_column}) out of bounds."
-                  f" Defaulting to {fieldnames[0]}.")
-            query_column = fieldnames[0]
+        if query_column not in fieldnames:
+            try:
+                query_column = int(query_column)
+            except (ValueError, TypeError):
+                print(f"Error: Query ('{query_column}') not found.")
+                sys.exit(1)
+                return 
 
-        try:
-            result_column = int(result_column)
-            result_column = fieldnames[result_column]
-        except (ValueError, TypeError):
-            if result_column not in fieldnames:
-                print(f"Error: Result ('{result_column}') not found."
-                      f" Defaulting to {fieldnames[1]}.")
-                result_column = fieldnames[1]
-        except IndexError:
-            print(f"Error: Result index ({result_column}) out of bounds."
-                  f" Defaulting to {fieldnames[1]}.")
-            result_column = fieldnames[1]
+        if result_column not in fieldnames:
+            try:
+                result_column = int(result_column)
+            except (ValueError, TypeError):
+                print(f"Error: Result ('{result_column}') not found.")
+                sys.exit(1)
+                return
+
+        if not isinstance(query_column, int) and not isinstance(result_column, int):
+            reader = csv.Reader(file)
 
         results = []
 
@@ -51,10 +45,11 @@ def get_column(file_name, query_column, query_value, result_column=1):
             if row[query_column] == query_value:
                 val = row[result_column]
                 val = val.replace(',', '')
-                val.replace(' ', '')
+                val = val.replace(' ', '')
                 decimal = float(val)
                 integer = int(decimal)
                 results.append(integer)
 
+    print(f"Column '{result_column}' by '{query_column}:")
+    
     return results
-
