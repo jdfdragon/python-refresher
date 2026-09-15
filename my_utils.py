@@ -18,7 +18,7 @@ def get_column(file_name, query_column, query_value, result_column=1):
 
         first_row = next(reader)
         num_columns = len(first_row)
-    
+
         reader = csv.reader(file)
 
         try:
