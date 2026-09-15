@@ -5,14 +5,14 @@ import sys
 
 def get_column(file_name, query_column, query_value, result_column=1):
 
+    file_path = Path(file_name)
+
+    if not file_path.is_file():
+        print(f"Error: File '{file_name}' not found in current directory.")
+        sys.exit(1)
+        return
+
     with open(file_name, mode='r', encoding='utf-8', newline='') as file:
-
-        # test file path
-        file_path = Path(file_name)
-
-        if not file_path.is_file():
-            print(f"Error: File '{file_name}' not found.")
-            return []
 
         reader = csv.reader(file)
 
@@ -21,7 +21,7 @@ def get_column(file_name, query_column, query_value, result_column=1):
         except (ValueError, TypeError):
             print(f"Error: Query ('{query_column}') not found.")
             sys.exit(1)
-            return 
+            return
 
         try:
             result_column = int(result_column)
@@ -29,7 +29,7 @@ def get_column(file_name, query_column, query_value, result_column=1):
             print(f"Error: Result ('{result_column}') not found.")
             sys.exit(1)
             return
-        
+
         results = []
 
         for row in reader:
@@ -40,5 +40,5 @@ def get_column(file_name, query_column, query_value, result_column=1):
                 decimal = float(val)
                 integer = int(decimal)
                 results.append(integer)
-    
+
     return results
