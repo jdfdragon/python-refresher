@@ -5,13 +5,33 @@ import sys
 
 def get_column(file_name, query_column, query_value, result_column=1):
 
-    """
-    Read a csv file and returns a list of values from a specified column [result_column],
-    based on a value [query_value] in a different column [query_column].
+    """Read a csv file and returns a list of values from a specified column,
+    based on a value [query_value] in a different column.
+
+    Parameters
+    ----------
+    file_name : str
+        The name of the csv
+
+    query_column : int
+        The column to check for query_value
+
+    query_value : Any type
+        The value to look for down query_column
+
+    result_column : int
+        The column to return values from, matching query_value
+
+    Returns
+    -------
+    results
+        List of int matching query_value, from result_column
+
     """
 
     file_path = Path(file_name)
 
+    # Check if file exists and is a csv file.
     if not file_path.is_file():
         print(f"Error: File '{file_name}' not found in current directory.")
         sys.exit(1)
@@ -24,25 +44,29 @@ def get_column(file_name, query_column, query_value, result_column=1):
 
         reader = csv.reader(file)
 
+        # Need to check to see how many columns reader has, so grab first
+        # line and then reset the reader
         first_row = next(reader)
         num_columns = len(first_row)
 
         reader = csv.reader(file)
 
+        # Only accept indices that can be transformed cleanly to int
         try:
             query_column = int(query_column)
         except (ValueError, TypeError):
-            print(f"Error: Query column ('{query_column}') is not an integer.")
+            print(f"Error: Query column ('{query_column}') is not integer.")
             sys.exit(1)
 
         if query_column >= num_columns:
             print(f"Error: Query column ('{query_column}') out of bounds.")
             sys.exit(1)
 
+        # 2 logic sets for 2 error messages, result and query
         try:
             result_column = int(result_column)
         except (ValueError, TypeError):
-            print(f"Error: Result column ('{result_column}') is not an integer.")
+            print(f"Error: Result column ('{result_column}') is not integer.")
             sys.exit(1)
 
         if result_column >= num_columns:
@@ -60,6 +84,7 @@ def get_column(file_name, query_column, query_value, result_column=1):
                 integer = int(decimal)
                 results.append(integer)
 
+        # Give user feedback if misspelled query_value or similar.
         if len(results) == 0:
             print("No results found.")
 
