@@ -80,11 +80,16 @@ def get_column(file_name, query_column, query_value, result_column=1):
                 val = row[result_column]
                 val = val.replace(',', '')
                 val = val.replace(' ', '')
-                decimal = float(val)
+                try:
+                    decimal = float(val)
+                except (ValueError, TypeError):
+                    print(f"Data must be numberic. Found {val}.")
+                    sys.exit(1)
+                    return results
                 integer = int(decimal)
                 results.append(integer)
 
-        # Give user feedback if misspelled query_value or similar.
+        # Give user feedback if misspelled query_value or similar
         if len(results) == 0:
             print("No results found.")
 
