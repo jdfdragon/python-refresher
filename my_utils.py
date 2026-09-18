@@ -1,35 +1,96 @@
+from pathlib import Path
 import csv
+import sys
+
 
 def get_column(file_name, query_column, query_value, result_column=1):
 
-    file = open(file_name, mode='r', encoding='utf-8', newline='')
+    """Read a csv file and returns a list of values from a specified column,
+    based on a value [query_value] in a different column.
 
-    reader = csv.DictReader(file)
+    Parameters
+    ----------
+    file_name : str
+        The name of the csv
 
-    if type(query_column) == str:
-        if query_column not in reader.fieldnames:
-            print(f"Error: Query ('{query_column}') not found. Defaulting to {reader.fieldnames[0]}.")
-            query_column = reader.fieldnames[0]
-    else:
-        query_column = reader.fieldnames[query_column]
-        
+    query_column : int
+        The column to check for query_value
 
+    query_value : Any type
+        The value to look for down query_column
 
-    if type(result_column) == str:
-        if result_column not in reader.fieldnames:
-            print(f"Error: Result ('{result_column}') not found. Defaulting to {reader.fieldnames[1]}.")
-            result_column = reader.fieldnames[1]
-    else:
-        result_column = reader.fieldnames[result_column]
+    result_column : int
+        The column to return values from, matching query_value
 
+    Returns
+    -------
+    results
+        List of int matching query_value, from result_column
 
-    results = []
+    """
 
-    for row in reader:
-        if row[query_column] == query_value:
-            results.append(row[result_column])
+    file_path = Path(file_name)
 
-    file.close()
+    # Check if file exists and is a csv file.
+    if not file_path.is_file():
+        print(f"Error: File '{file_name}' not found in current directory.")
+        sys.exit(1)
+
+    if file_path.suffix.lower() != ".csv":
+        print(f"Expected a .csv file, got {file_path.suffix}")
+        sys.exit(1)
+
+    with open(file_name, mode='r', encoding='utf-8', newline='') as file:
+
+        reader = csv.reader(file)
+
+        # Need to check to see how many columns reader has, so grab first
+        # line and then reset the reader
+        first_row = next(reader)
+        num_columns = len(first_row)
+
+        reader = csv.reader(file)
+
+        # Only accept indices that can be transformed cleanly to int
+        try:
+            query_column = int(query_column)
+        except (ValueError, TypeError):
+            print(f"Error: Query column ('{query_column}') is not integer.")
+            sys.exit(1)
+
+        if query_column >= num_columns:
+            print(f"Error: Query column ('{query_column}') out of bounds.")
+            sys.exit(1)
+
+        # 2 logic sets for 2 error messages, result and query
+        try:
+            result_column = int(result_column)
+        except (ValueError, TypeError):
+            print(f"Error: Result column ('{result_column}') is not integer.")
+            sys.exit(1)
+
+        if result_column >= num_columns:
+            print(f"Error: Result column ('{result_column}') out of bounds.")
+            sys.exit(1)
+
+        results = []
+
+        for row in reader:
+            if row[query_column] == query_value:
+                val = row[result_column]
+                val = val.replace(',', '')
+                val = val.replace(' ', '')
+                try:
+                    decimal = float(val)
+                except (ValueError, TypeError):
+                    print(f"Data must be numberic. Found {val}.")
+                    sys.exit(1)
+                    return results
+                integer = int(decimal)
+                results.append(integer)
+
+        # Give user feedback if misspelled query_value or similar
+        if len(results) == 0:
+            print("No results found.")
 
     return results
-
