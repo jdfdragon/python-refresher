@@ -1,9 +1,10 @@
 import my_utils
 import argparse
+import sys
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-file", type=str, help='Name of file')
-parser.add_argument("-q_col", type=int, help='Column to look down')
+parser.add_argument("-q_col", help='Column to look down')
 parser.add_argument("-q_val", help='Value to look for')
 parser.add_argument("-res_col", help='Column to grab from',
                     nargs='?', default=1)
@@ -29,5 +30,6 @@ if args.stat:
         print(sd)
     else:
         print(f"Error: Invalid statistic requested '{args.stat}'.")
+        sys.exit(1)
 else:
     print(fires)

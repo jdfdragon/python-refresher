@@ -164,6 +164,19 @@ class TestUtils(unittest.TestCase):
         sd = my_utils.get_sd(lst)
         self.assertAlmostEqual(sd, 1, 2)
 
+    """get_column() Tests"""
+    def test_col_noFile(self):
+        self.assertRaises(SystemExit, my_utils.get_column,
+                          "nonexistent.csv", 0, "Afghanistan")
+
+    def test_col_noCSV(self):
+        self.assertRaises(SystemExit, my_utils.get_column,
+                          "test_my_utils.py", 0, "Afghanistan")
+
+    def test_col_noInt(self):
+        self.assertRaises(SystemExit, my_utils.get_column,
+                          "test/test_file.csv", "a", "Afghanistan")
+
 
 if __name__ == '__main__':
     unittest.main()
