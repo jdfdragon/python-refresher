@@ -17,6 +17,13 @@ def get_mean(array):
         The mean value of the list.
 
     """
+    if not isinstance(array, list) or not array:
+            sys.exit(1)
+    if not all(
+        isinstance(x, (int, float)) and not isinstance(x, bool)
+        for x in array
+        ):
+        sys.exit(1)
 
     mean = sum(array) / len(array)
 
@@ -37,6 +44,13 @@ def get_median(array):
         The median of the array.
 
     """
+    if not isinstance(array, list) or not array:
+        sys.exit(1)
+    if not all(
+        isinstance(x, (int, float)) and not isinstance(x, bool)
+        for x in array
+        ):
+        sys.exit(1)
 
     array.sort()
 
