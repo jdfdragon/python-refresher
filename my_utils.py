@@ -77,8 +77,7 @@ def get_sd(array):
     return sd
 
 
-def get_column(file_name, query_column, query_value, result_column=1,
-               stats=None):
+def get_column(file_name, query_column, query_value, result_column=1):
 
     """Read a csv file and returns a list of values from a specified column,
     based on a value [query_value] in a different column.
@@ -96,9 +95,6 @@ def get_column(file_name, query_column, query_value, result_column=1,
 
     result_column : int
         The column to return values from, matching query_value. Default is 1
-
-    stats : str, optional
-        One of "mean", "median", or "sd". If provided, returns the statistic
 
 
     Returns
@@ -172,19 +168,5 @@ def get_column(file_name, query_column, query_value, result_column=1,
         if len(results) == 0:
             print("No results found.")
 
-        if stats is not None:
-
-            if stats == "mean":
-                mean = get_mean(results)
-                return mean
-            elif stats == "median":
-                median = get_median(results)
-                return median
-            elif stats == "sd":
-                sd = get_sd(results)
-                return sd
-            else:
-                print(f"Error: Invalid statistic requested '{stats}'.")
-                sys.exit(1)
 
     return results
