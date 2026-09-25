@@ -2,6 +2,8 @@
 
 This file contains utilities and functions to enable the easy reading and searching inside of csv files. While tested and confirmed to run with the Agrofood_co2_emission file, it can easily be applied to csv files of any shape or size. It currently does not ship with any relevant data. Data for analysis should be moved into the same folder as the python scripts.
 
+UPDATE: The newest version of this package includes new functionality to perform basic rudimentary statistical analysis on output lists. See "Usage" for more information
+
 ## Installation
 
 To install the package, please see one of the relevant releases. Download and unzip the file. Then, while inside of the unzipped folder, activate a mamba environment based on the dependencies of the project using 
@@ -20,6 +22,14 @@ With python-refresher as your working directory, you can run the following comma
 '''bash
 python print_fires.py -file "path/to/my/file" -q_col int_column_to_search \
     -q_val "str_value_to_search" -res_col int_column_to_find(optional)
+'''
+
+UPDATE: The newest version of this package includes new functionality to perform basic rudimentary statistical analysis on output lists. To ignore, simply use the package as previously designed. To get the mean, median, or standard deviation of the output list, use the '-stat' flag:
+
+'''bash
+python print_fires.py -file "path/to/my/file" -q_col int_column_to_search \
+    -q_val "str_value_to_search" -res_col int_column_to_find(optional) \
+    -stat "mean/median/sd"
 '''
 
 ### Examples

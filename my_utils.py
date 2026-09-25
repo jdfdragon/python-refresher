@@ -3,6 +3,90 @@ import csv
 import sys
 
 
+def get_mean(array):
+    """Calculate the mean value of a list of numbers.
+
+    Parameters
+    ----------
+    array : list
+        A list of numbers. Intended for use with int.
+
+    Returns
+    -------
+    mean : float
+        The mean value of the list.
+
+    """
+    if not isinstance(array, list) or not array:
+        sys.exit(1)
+    if not all(isinstance(x, (int, float)) and not isinstance(x, bool)
+               for x in array):
+        sys.exit(1)
+
+    mean = sum(array) / len(array)
+
+    return mean
+
+
+def get_median(array):
+    """Find the median value of a list.
+
+    Parameters
+    ----------
+    array : list
+        A list of numbers. Intended for use with int.
+
+    Returns
+    -------
+    median
+        The median of the array.
+
+    """
+    if not isinstance(array, list) or not array:
+        sys.exit(1)
+    if not all(isinstance(x, (int, float)) and not isinstance(x, bool)
+               for x in array):
+        sys.exit(1)
+
+    array.sort()
+
+    n = len(array)
+    mid = n // 2
+
+    if n % 2 == 0:
+        # If even, average the two middle elements
+        median = (array[mid - 1] + array[mid]) / 2
+    else:
+        median = array[mid]
+
+    return median
+
+
+def get_sd(array):
+    """Calculate the standard deviation of a list of numbers.
+
+    Parameters
+    ----------
+    array : list
+        The list of numbers. Intended for use with int.
+
+    Returns
+    -------
+    sd
+        The standard deviation of the list.
+    """
+
+    mean = get_mean(array)
+    n = len(array)
+
+    sse = sum((x - mean)**2 for x in array)
+
+    var = sse / n
+    sd = var**0.5
+
+    return sd
+
+
 def get_column(file_name, query_column, query_value, result_column=1):
 
     """Read a csv file and returns a list of values from a specified column,
@@ -20,7 +104,8 @@ def get_column(file_name, query_column, query_value, result_column=1):
         The value to look for down query_column
 
     result_column : int
-        The column to return values from, matching query_value
+        The column to return values from, matching query_value. Default is 1
+
 
     Returns
     -------
