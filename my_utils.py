@@ -8,11 +8,13 @@ def get_mean(array):
 
     Parameters
     ----------
-    array (list): A list of numbers. Intended for use with int.
+    array : list
+        A list of numbers. Intended for use with int.
 
     Returns
     -------
-    mean (float): The mean value of the list.
+    mean : float
+        The mean value of the list.
 
     """
 
@@ -26,11 +28,13 @@ def get_median(array):
 
     Parameters
     ----------
-    array (list): A list of numbers. Intended for use with int.
+    array : list
+        A list of numbers. Intended for use with int.
 
     Returns
     -------
-    float: The median of the array.
+    median
+        The median of the array.
 
     """
 
@@ -53,11 +57,13 @@ def get_sd(array):
 
     Parameters
     ----------
-    array (list): The list of numbers. Intended for use with int.
+    array : list
+        The list of numbers. Intended for use with int.
 
     Returns
     -------
-    sd (float): The standard deviation of the list.
+    sd
+        The standard deviation of the list.
     """
 
     mean = get_mean(array)
