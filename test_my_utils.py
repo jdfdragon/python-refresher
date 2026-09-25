@@ -3,8 +3,10 @@ import my_utils
 from random import uniform
 from random import gauss
 
+
 class TestUtils(unittest.TestCase):
 
+    """get_mean() Tests"""
     # Test mean function even
     def test_mean_pos4(self):
         lst = [1, 2, 4, 5]
@@ -38,7 +40,7 @@ class TestUtils(unittest.TestCase):
         m = my_utils.get_mean(lst)
         self.assertEqual(m, -3.5)
 
-    # Assorted mean error handling 
+    # Assorted mean error handling
     def test_mean_str(self):
         lst = ["a", 1, 2]
         self.assertRaises(SystemExit, my_utils.get_mean, lst)
@@ -46,7 +48,7 @@ class TestUtils(unittest.TestCase):
     def test_mean_empty(self):
         lst = []
         self.assertRaises(SystemExit, my_utils.get_mean, lst)
-    
+
     def test_mean_none(self):
         lst = None
         self.assertRaises(SystemExit, my_utils.get_mean, lst)
@@ -56,7 +58,8 @@ class TestUtils(unittest.TestCase):
         lst = [uniform(-10, 10) for _ in range(100000)]
         m = my_utils.get_mean(lst)
         self.assertAlmostEqual(m, 0, 1)
-    
+
+    """get_median() Tests"""
     # Test median function even
     def test_median_pos4(self):
         lst = [1, 2, 4, 10]
@@ -68,7 +71,6 @@ class TestUtils(unittest.TestCase):
         m = my_utils.get_median(lst)
         self.assertEqual(m, -3)
 
-
     # Test median function odd
     def test_median_pos5(self):
         lst = [1, 3, 4, 6, 20]
@@ -79,7 +81,6 @@ class TestUtils(unittest.TestCase):
         lst = [-1, -3, -4, -6, -20]
         m = my_utils.get_median(lst)
         self.assertEqual(m, -4)
-
 
     # Test median float
     def test_median_posFloat(self):
@@ -118,6 +119,7 @@ class TestUtils(unittest.TestCase):
         m = my_utils.get_median(lst)
         self.assertAlmostEqual(m, 15, 1)
 
+    """get_sd() Tests"""
     # Test sd function even
     def test_sd_pos4(self):
         lst = [0, 0, 2, 2]
@@ -153,6 +155,7 @@ class TestUtils(unittest.TestCase):
         lst = [gauss(0, 1) for _ in range(100000)]
         sd = my_utils.get_sd(lst)
         self.assertAlmostEqual(sd, 1, 2)
+
 
 if __name__ == '__main__':
     unittest.main()

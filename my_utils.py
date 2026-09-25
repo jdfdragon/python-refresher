@@ -18,11 +18,9 @@ def get_mean(array):
 
     """
     if not isinstance(array, list) or not array:
-            sys.exit(1)
-    if not all(
-        isinstance(x, (int, float)) and not isinstance(x, bool)
-        for x in array
-        ):
+        sys.exit(1)
+    if not all(isinstance(x, (int, float)) and not isinstance(x, bool)
+               for x in array):
         sys.exit(1)
 
     mean = sum(array) / len(array)
@@ -46,10 +44,8 @@ def get_median(array):
     """
     if not isinstance(array, list) or not array:
         sys.exit(1)
-    if not all(
-        isinstance(x, (int, float)) and not isinstance(x, bool)
-        for x in array
-        ):
+    if not all(isinstance(x, (int, float)) and not isinstance(x, bool)
+               for x in array):
         sys.exit(1)
 
     array.sort()
@@ -181,6 +177,5 @@ def get_column(file_name, query_column, query_value, result_column=1):
         # Give user feedback if misspelled query_value or similar
         if len(results) == 0:
             print("No results found.")
-
 
     return results
