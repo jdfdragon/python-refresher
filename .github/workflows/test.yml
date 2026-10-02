@@ -27,8 +27,7 @@ jobs:
             environment-file: environment.yml
             init-shell: bash
         - run: |
-            cd test
-            python -m unittest test_my_utils
+            python -m unittest test/test_my_utils
           shell: bash -l {0}
     run_function_test:
         runs-on: ubuntu-latest
@@ -39,7 +38,6 @@ jobs:
             environment-file: environment.yml
             init-shell: bash
         - run: |
-            cd test
-            bash test_print_fires.sh
+            bash test/test_print_fires.sh
           shell: bash -l {0}
 
