@@ -16,7 +16,8 @@ query_value = args.q_val
 query_column = args.q_col
 result_column = args.res_col
 file_name = args.file
-fires = my_utils.get_column(file_name, query_column, query_value, result_column)
+fires = my_utils.get_column(file_name, query_column,
+                            query_value, result_column)
 
 if args.stat:
     if args.stat == "mean":
