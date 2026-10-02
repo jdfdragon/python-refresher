@@ -2,7 +2,7 @@
 
 This file contains utilities and functions to enable the easy reading and searching inside of csv files. While tested and confirmed to run with the Agrofood_co2_emission file, it can easily be applied to csv files of any shape or size. It currently does not ship with any relevant data. Data for analysis should be moved into the same folder as the python scripts.
 
-UPDATE: The newest version of this package includes new functionality to perform basic rudimentary statistical analysis on output lists. See "Usage" for more information
+The newest version of this package includes new functionality to perform basic rudimentary statistical analysis on output lists. See "Usage" for more information
 
 ## Installation
 
@@ -24,7 +24,7 @@ python print_fires.py -file "path/to/my/file" -q_col int_column_to_search \
     -q_val "str_value_to_search" -res_col int_column_to_find(optional)
 '''
 
-UPDATE: The newest version of this package includes new functionality to perform basic rudimentary statistical analysis on output lists. To ignore, simply use the package as previously designed. To get the mean, median, or standard deviation of the output list, use the '-stat' flag:
+The newest version of this package includes new functionality to perform basic rudimentary statistical analysis on output lists. To ignore, simply use the package as previously designed. To get the mean, median, or standard deviation of the output list, use the '-stat' flag:
 
 '''bash
 python print_fires.py -file "path/to/my/file" -q_col int_column_to_search \
@@ -51,6 +51,10 @@ python3 print_fires.py -file "environment.yml" -q_col 0 \
     -q_val "United States of America" -res_col 1
 '''
 returns "Expected a .csv file, got .yml"
+
+## Contributing
+
+New to version 4.0, automatic test architecture is now implemented. Ensure that tests are written appropriately in the "tests" folder, and add the appropriate text in the test.yml file. This ensures the tests will be automatically run upon pushing and pulling.
 
 ## Summary of Changes:
 

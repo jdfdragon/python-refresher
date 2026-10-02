@@ -1,0 +1,43 @@
+name: Run Unit and Function Tests
+
+on:
+    push:
+        branches: 
+            - '*'
+    pull_request:
+        branches: [ master ]
+
+jobs:
+    run_styleCheck:
+        runs-on: ubuntu-latest
+        steps:
+        - uses: actions/checkout@v7
+        - uses: mamba-org/setup-micromamba@v3
+          with:
+            environment-file: environment.yml
+            init-shell: bash
+        - run: pycodestyle $(git ls-files "*.py")
+          shell: bash -l {0}
+    run_unit_test:
+        runs-on: ubuntu-latest
+        steps:
+        - uses: actions/checkout@v7
+        - uses: mamba-org/setup-micromamba@v3
+          with:
+            environment-file: environment.yml
+            init-shell: bash
+        - run: |
+            python -m unittest tests/test_my_utils.py
+          shell: bash -l {0}
+    run_function_test:
+        runs-on: ubuntu-latest
+        steps:
+        - uses: actions/checkout@v7
+        - uses: mamba-org/setup-micromamba@v3
+          with:
+            environment-file: environment.yml
+            init-shell: bash
+        - run: |
+            bash tests/test_print_fires.sh
+          shell: bash -l {0}
+
